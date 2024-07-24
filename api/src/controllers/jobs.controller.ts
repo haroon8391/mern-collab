@@ -34,8 +34,17 @@ export const createJob = async (req: Request, res: Response) => {
 	res.json({ status: "success", newJob });
 };
 
-export const updateJob = (req: Request, res: Response) => {
-	res.send("PUT /jobs/:id");
+export const updateJob = async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const body = req.body;
+
+	const updatedJob = await Job.findByIdAndUpdate(id, body, { new: true });
+
+	if (!updatedJob) {
+		return res.status(404).json({ message: "Job not found" });
+	}
+
+	res.json({ status: "success", updatedJob });
 };
 
 export const deleteJob = (req: Request, res: Response) => {
