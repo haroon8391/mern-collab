@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import "express-async-errors";
 
 import middleware from "./utils/middleware";
 import jobsRouter from "./routes/jobs.route";
