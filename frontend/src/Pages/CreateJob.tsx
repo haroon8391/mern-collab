@@ -8,9 +8,25 @@ const JobPostForm: React.FC = () => {
   const [location, setLocation] = useState("");
   const [company, setCompany] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
+
+    const jobPost = { title, description, salary, company, location };
+
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/jobs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jobPost),
+      });
+      const data = await response.json();
+      console.log("Job Posted Successfully " + data);
+    } catch (err) {
+      console.log("Error while posting job " + err);
+    }
+
     console.log({ title, description, salary, company, location });
   };
 
