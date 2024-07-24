@@ -4,6 +4,7 @@ interface Job {
 	id: string; // Adjust type based on your backend data
 	title: string;
 	description: string;
+	location: string;
 	// Add other fields if necessary
 }
 
@@ -29,8 +30,10 @@ const JobLists = () => {
 						className="border rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow"
 					>
 						<h2 className="text-xl font-semibold mb-2">{job.title}</h2>
-						<p className="text-gray-700 mb-2">{job.description}</p>
-						<p className="text-gray-500 mb-4">Location</p>
+						<p className="text-gray-700 mb-2">
+							{job.description.substring(0, 20)}...
+						</p>
+						<p className="text-gray-500 mb-4">{job.location}</p>
 						<a href={`/`} className="text-blue-500 hover:underline">
 							View Details
 						</a>
