@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import Job from "../models/Job.model";
 
 const jobs = [
 	{
@@ -36,8 +37,20 @@ export const getJob = (req: Request, res: Response) => {
 	res.send("GET /jobs/:id");
 };
 
-export const createJob = (req: Request, res: Response) => {
-	res.send("POST /jobs");
+export const createJob = async (req: Request, res: Response) => {
+	const { title, description, company, location, salary } = req.body;
+
+	const job = new Job({
+		title,
+		description,
+		company,
+		location,
+		salary,
+	});
+
+	const newJob = await job.save();
+
+	res.json({ status: "success", newJob });
 };
 
 export const updateJob = (req: Request, res: Response) => {
