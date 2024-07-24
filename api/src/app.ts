@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import jobsRouter from "./routes/jobs.route";
 import cors from "cors";
+import dbConn from "./config/dbConn";
+dbConn();
 
 const app = express();
 
