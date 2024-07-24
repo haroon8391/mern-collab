@@ -6,8 +6,16 @@ export const getJobs = async (req: Request, res: Response) => {
 	res.json(jobs);
 };
 
-export const getJob = (req: Request, res: Response) => {
-	res.send("GET /jobs/:id");
+export const getJob = async (req: Request, res: Response) => {
+	const { id } = req.params;
+
+	const job = await Job.findById(id);
+
+	if (!job) {
+		return res.status(404).json({ message: "Job not found" });
+	}
+
+	res.json({ status: "success", job });
 };
 
 export const createJob = async (req: Request, res: Response) => {
