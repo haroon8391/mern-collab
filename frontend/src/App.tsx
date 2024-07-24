@@ -1,6 +1,6 @@
 // import React from "react";
-import JobLists from "./Pages/JobLists";
 import "./App.css";
+import JobLists from "./Pages/JobLists";
 import CreateJob from "./Pages/CreateJob";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
