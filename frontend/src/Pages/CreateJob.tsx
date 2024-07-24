@@ -31,8 +31,8 @@ const JobPostForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full mx-auto p-6 bg-gray-100 shadow-md rounded-md">
-      <h1 className="text-2xl font-bold mb-4">Create Job Post</h1>
+    <div className="w-3/4 mx-auto p-6 bg-gray-100 shadow-md rounded-md">
+      <h1 className="text-3xl font-bold mb-4 text-center">Create Job Post</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="title" className="text-lg font-medium mb-2">
@@ -103,12 +103,14 @@ const JobPostForm: React.FC = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500"
-        >
-          Post Job
-        </button>
+        <div className="m-4 flex justify-center">
+          <button
+            type="submit"
+            className="px-3 flex justify-center items-center bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500"
+          >
+            Post Job
+          </button>
+        </div>
       </form>
     </div>
   );
