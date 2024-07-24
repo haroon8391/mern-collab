@@ -31,8 +31,8 @@ const JobPostForm: React.FC = () => {
   };
 
   return (
-    <div className="w-3/4 mx-auto p-6 bg-gray-100 shadow-md rounded-md">
-      <h1 className="text-3xl font-bold mb-4 text-center">Create Job Post</h1>
+    <div className="md:w-3/4 lg:w-3/4 sm:w-full mx-auto p-6 bg-gray-100 shadow-md rounded-md">
+      <h1 className="text-3xl font-bold mb-10 text-center">Create Job Post</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="title" className="text-lg font-medium mb-2">
