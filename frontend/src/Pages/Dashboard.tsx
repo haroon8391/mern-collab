@@ -6,6 +6,7 @@ interface Job {
 	title: string;
 	description: string;
 	location: string;
+	createdAt: string;
 	// Add other fields if necessary
 }
 
@@ -20,7 +21,10 @@ const Dashboard: React.FC = () => {
 			try {
 				const response = await fetch("/api/v1/jobs");
 				const data = await response.json();
-				setJobs(data);
+				const sortedJobs = data.sort((a: Job, b: Job) =>
+					a.createdAt > b.createdAt ? -1 : 1
+				);
+				setJobs(sortedJobs);
 			} catch (error) {
 				console.error("Error fetching jobs:", error);
 			} finally {
@@ -66,13 +70,13 @@ const Dashboard: React.FC = () => {
 							<div className="flex space-x-2">
 								<button
 									onClick={() => navigate(`/update-job/${job.id}`)}
-									className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+									className="bg-blue-700 text-white px-4 py-2 rounded mr-2 hover:bg-blue-500"
 								>
 									Update
 								</button>
 								<button
 									onClick={() => handleDelete(job.id)}
-									className="bg-red-500 text-white px-4 py-2 rounded"
+									className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-500"
 								>
 									Delete
 								</button>
