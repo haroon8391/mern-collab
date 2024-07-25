@@ -13,7 +13,7 @@ interface Job {
 const Dashboard: React.FC = () => {
 	const [jobs, setJobs] = useState<Job[]>([]);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState("");
+	const [error, setError] = useState<string | null>(null);
 
 	const navigate = useNavigate();
 
@@ -84,30 +84,61 @@ const Dashboard: React.FC = () => {
 			) : (
 				<div className="space-y-4">
 					{error && <p className="text-red-500">{error}</p>}
-					{jobs.map((job) => (
-						<div
-							className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg border border-gray-200 hover:shadow-lg transition-shadow duration-300"
-							key={job.id}
-						>
-							<span className="text-lg font-medium text-gray-700">
-								{job.title} -- {job.location}
-							</span>
-							<div className="flex space-x-2">
-								<button
-									onClick={() => navigate(`/update-job/${job.id}`)}
-									className="bg-blue-700 text-white px-4 py-2 rounded mr-2 hover:bg-blue-500"
-								>
-									Update
-								</button>
-								<button
-									onClick={() => handleDelete(job.id)}
-									className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-500"
-								>
-									Delete
-								</button>
-							</div>
-						</div>
-					))}
+
+					<div className="overflow-x-auto">
+						<table className="min-w-full bg-white shadow-md rounded-lg border border-gray-200">
+							<thead className="bg-gray-50">
+								<tr>
+									<th className="py-2 px-4 border-b border-gray-200">Title</th>
+									<th className="py-2 px-4 border-b border-gray-200">
+										Location
+									</th>
+									<th className="py-2 px-4 border-b border-gray-200">
+										Created At
+									</th>
+									<th className="py-2 px-4 border-b border-gray-200">
+										Actions
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{jobs.map((job) => (
+									<tr
+										key={job.id}
+										className="hover:bg-gray-100 transition duration-150"
+									>
+										<td className="py-2 px-4 border-b border-gray-200">
+											{job.title}
+										</td>
+										<td className="py-2 px-4 border-b border-gray-200">
+											{job.location}
+										</td>
+										<td className="py-2 px-4 border-b border-gray-200">
+											{new Date(job.createdAt).toLocaleDateString()}
+										</td>
+										<td className="py-2 px-4 border-b border-gray-200">
+											<div className="flex space-x-2">
+												<button
+													onClick={() => navigate(`/update-job/${job.id}`)}
+													className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-500"
+													aria-label={`Update ${job.title}`}
+												>
+													Update
+												</button>
+												<button
+													onClick={() => handleDelete(job.id)}
+													className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-500"
+													aria-label={`Delete ${job.title}`}
+												>
+													Delete
+												</button>
+											</div>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			)}
 		</div>
