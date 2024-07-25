@@ -96,31 +96,19 @@ const Navbar: React.FC = () => {
 				className={`${isOpen ? "block" : "hidden"} md:hidden`}
 				id="mobile-menu"
 			>
-				<div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-					<Link
-						to="/"
-						className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-					>
+				<div className="flex flex-col justify-center px-2 pt-2 pb-3 space-y-1 sm:px-3">
+					<NavLink to="/" className={navLinkClass}>
 						Home
-					</Link>
-					<Link
-						to="/create-job"
-						className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-					>
+					</NavLink>
+					<NavLink to="/create-job" className={navLinkClass}>
 						Create Job
-					</Link>
-					<Link
-						to="/jobs"
-						className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-					>
+					</NavLink>
+					<NavLink to="/jobs" className={navLinkClass}>
 						Job List
-					</Link>
-					<Link
-						to="/dashboard"
-						className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-					>
+					</NavLink>
+					<NavLink to="/dashboard" className={navLinkClass}>
 						Dashboard
-					</Link>
+					</NavLink>
 				</div>
 			</div>
 		</nav>

@@ -1,4 +1,3 @@
-// import React from "react";
 import "./App.css";
 import JobLists from "./Pages/JobLists";
 import CreateJob from "./Pages/CreateJob";
