@@ -19,24 +19,30 @@ const Navbar: React.FC = () => {
               </Link>
             </div>
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
+              <div className="ml-20 flex items-baseline space-x-4">
                 <Link
                   to="/"
-                  className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-bold"
+                  className="text-white hover:bg-gray-500 hover:text-white px-5 py-2 rounded-md text-sm font-bold"
                 >
                   Home
                 </Link>
                 <Link
                   to="/create-job"
-                  className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-bold"
+                  className="text-white hover:bg-gray-500 hover:text-white px-5 py-2 rounded-md text-sm font-bold"
                 >
                   Create Job
                 </Link>
                 <Link
                   to="/jobs"
-                  className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-bold"
+                  className="text-white hover:bg-gray-500 hover:text-white px-5 py-2 rounded-md text-sm font-bold"
                 >
                   Job List
+                </Link>
+                <Link
+                  to="/dashboard"
+                  className="text-white hover:bg-gray-500 hover:text-white px-5 py-2 rounded-md text-sm font-bold"
+                >
+                  Dashboard
                 </Link>
               </div>
             </div>
@@ -110,6 +116,12 @@ const Navbar: React.FC = () => {
             className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             Job List
+          </Link>
+          <Link
+            to="/dashboard"
+            className="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          >
+            Dashboard
           </Link>
         </div>
       </div>
