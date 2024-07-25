@@ -13,9 +13,9 @@ export const getJob = async (req: Request, res: Response) => {
 
   if (!job) {
     return res.status(404).json({ message: "Job not found" });
+  } else {
+    res.json({ status: "success", job });
   }
-
-  res.json({ status: "success", job });
 };
 
 export const createJob = async (req: Request, res: Response) => {

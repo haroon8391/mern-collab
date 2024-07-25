@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Job {
   id: string;
@@ -33,9 +34,12 @@ const JobLists = () => {
               {job.description.substring(0, 20)}...
             </p>
             <p className="text-gray-500 mb-4">{job.location}</p>
-            <a href={`/`} className="text-blue-500 hover:underline">
+            <Link
+              to={`/jobs/${job.id}`}
+              className="text-blue-500 hover:underline"
+            >
               View Details
-            </a>
+            </Link>
           </div>
         ))}
       </div>
