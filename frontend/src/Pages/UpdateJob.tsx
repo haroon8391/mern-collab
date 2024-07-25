@@ -1,8 +1,17 @@
-// src/components/JobPostForm.tsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-const JobPostForm: React.FC = () => {
+interface Job {
+	id: string;
+	title: string;
+	description: string;
+	location: string;
+	salary: string;
+	company: string;
+}
+
+const UpdateJob = () => {
+	const { id } = useParams();
 	const navigate = useNavigate();
 
 	const [title, setTitle] = useState("");
@@ -11,43 +20,51 @@ const JobPostForm: React.FC = () => {
 	const [location, setLocation] = useState("");
 	const [company, setCompany] = useState("");
 
-	const resetFields = () => {
-		setTitle("");
-		setDescription("");
-		setSalary("");
-		setLocation("");
-		setCompany("");
-	};
+	useEffect(() => {
+		console.log("Fetching job with id: ", id);
+		const fetchJob = async () => {
+			try {
+				const response = await fetch(`/api/v1/jobs/${id}`);
+				const data = await response.json();
 
-	const handleSubmit = async (e: React.FormEvent) => {
+				setTitle(data.job.title);
+				setDescription(data.job.description);
+				setSalary(data.job.salary);
+				setLocation(data.job.location);
+				setCompany(data.job.company);
+			} catch (error) {
+				console.error("Error fetching job:", error);
+			}
+		};
+
+		fetchJob();
+	}, [id]);
+
+	const handleJobUpdate = async (e: React.FormEvent) => {
 		e.preventDefault();
-
-		const jobPost = { title, description, salary, company, location };
+		const job = { title, description, salary, location, company };
 
 		try {
-			const response = await fetch("/api/v1/jobs", {
-				method: "POST",
+			const response = await fetch(`/api/v1/jobs/${id}`, {
+				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(jobPost),
+				body: JSON.stringify(job),
 			});
 			const data = await response.json();
-			console.log("Job Posted Successfully " + data);
-
-			resetFields();
-			navigate("/jobs");
+			console.log("Job Updated Successfully " + data);
 		} catch (err) {
-			console.log("Error while posting job " + err);
+			console.log("Error while updating job " + err);
 		}
 
-		console.log({ title, description, salary, company, location });
+		navigate("/jobs");
 	};
 
 	return (
 		<div className="w-full p-6 bg-gray-100 shadow-md rounded-md">
 			<h1 className="text-2xl font-bold mb-4 text-center">Create Job Post</h1>
-			<form onSubmit={handleSubmit} className="space-y-4">
+			<form onSubmit={handleJobUpdate} className="space-y-4">
 				<div className="flex flex-col">
 					<label htmlFor="title" className="text-lg font-medium mb-2">
 						Job Title
@@ -90,7 +107,6 @@ const JobPostForm: React.FC = () => {
 					/>
 				</div>
 
-       
 				<div className="flex flex-col">
 					<label htmlFor="location" className="text-lg font-medium mb-2">
 						Company Name
@@ -121,7 +137,7 @@ const JobPostForm: React.FC = () => {
 				<div className="flex justify-center">
 					<button
 						type="submit"
-						className="px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500 hover:font-bold"
+						className="px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500"
 					>
 						Post Job
 					</button>
@@ -130,5 +146,4 @@ const JobPostForm: React.FC = () => {
 		</div>
 	);
 };
-
-export default JobPostForm;
+export default UpdateJob;
