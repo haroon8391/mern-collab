@@ -13,6 +13,7 @@ interface Job {
 const Dashboard: React.FC = () => {
 	const [jobs, setJobs] = useState<Job[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState("");
 
 	const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ const Dashboard: React.FC = () => {
 				setJobs(sortedJobs);
 			} catch (error) {
 				console.error("Error fetching jobs:", error);
+				setError("Failed to load jobs. Please try again later.");
 			} finally {
 				setLoading(false);
 			}
@@ -47,6 +49,7 @@ const Dashboard: React.FC = () => {
 			setJobs(jobs.filter((job) => job.id !== id));
 		} catch (error) {
 			console.error("Error deleting job:", error);
+			alert("Failed to delete job. Please try again later.");
 		}
 	};
 
@@ -59,6 +62,7 @@ const Dashboard: React.FC = () => {
 				<p>Loading...</p>
 			) : (
 				<div className="space-y-4">
+					{error && <p className="text-red-500">{error}</p>}
 					{jobs.map((job) => (
 						<div
 							className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg border border-gray-200 hover:shadow-lg transition-shadow duration-300"
