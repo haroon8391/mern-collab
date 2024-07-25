@@ -35,6 +35,7 @@ const App = () => {
 				</nav>
 				<div className="p-4">
 					<Routes>
+						<Route path="/" element={<h1>Home</h1>} />
 						<Route path="/create-job" element={<CreateJob />} />
 						<Route path="/jobs" element={<JobLists />} />
 						<Route path="/dashboard" element={<Dashboard />} />

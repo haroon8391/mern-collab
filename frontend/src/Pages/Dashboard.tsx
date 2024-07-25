@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 
+interface Job {
+	id: string; // Adjust type based on your backend data
+	title: string;
+	description: string;
+	location: string;
+	// Add other fields if necessary
+}
+
 const Dashboard: React.FC = () => {
-	const [jobs, setJobs] = useState([]);
+	const [jobs, setJobs] = useState<Job[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -29,8 +37,11 @@ const Dashboard: React.FC = () => {
 				<p>Loading...</p>
 			) : (
 				<div className="space-y-4">
-					{jobs.map(() => (
-						<div className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+					{jobs.map((job) => (
+						<div
+							className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg border border-gray-200 hover:shadow-lg transition-shadow duration-300"
+							key={job.id}
+						>
 							<span className="text-lg font-medium text-gray-700">
 								[job.title]
 							</span>
