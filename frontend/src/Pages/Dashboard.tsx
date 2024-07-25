@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-extrabold text-gray-800 mb-6">
+      <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center ">
         Job Dashboard
       </h1>
       {loading ? (
@@ -43,7 +43,7 @@ const Dashboard: React.FC = () => {
               key={job.id}
             >
               <span className="text-lg font-medium text-gray-700">
-                [job.title]
+                {job.title}
               </span>
               <div className="flex space-x-2">
                 <button className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
