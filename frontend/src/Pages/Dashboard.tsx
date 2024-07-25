@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Job {
 	id: string; // Adjust type based on your backend data
@@ -11,6 +12,8 @@ interface Job {
 const Dashboard: React.FC = () => {
 	const [jobs, setJobs] = useState<Job[]>([]);
 	const [loading, setLoading] = useState(true);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchJobs = async () => {
@@ -61,7 +64,10 @@ const Dashboard: React.FC = () => {
 								{job.title} -- {job.location}
 							</span>
 							<div className="flex space-x-2">
-								<button className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+								<button
+									onClick={() => navigate(`/update-job/${job.id}`)}
+									className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+								>
 									Update
 								</button>
 								<button
