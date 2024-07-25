@@ -90,6 +90,7 @@ const JobPostForm: React.FC = () => {
 					/>
 				</div>
 
+       
 				<div className="flex flex-col">
 					<label htmlFor="location" className="text-lg font-medium mb-2">
 						Company Name
@@ -120,7 +121,7 @@ const JobPostForm: React.FC = () => {
 				<div className="flex justify-center">
 					<button
 						type="submit"
-						className="px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500"
+						className="px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500 hover:font-bold"
 					>
 						Post Job
 					</button>
