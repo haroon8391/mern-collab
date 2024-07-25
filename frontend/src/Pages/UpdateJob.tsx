@@ -1,15 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-interface Job {
-	id: string;
-	title: string;
-	description: string;
-	location: string;
-	salary: string;
-	company: string;
-}
-
 const UpdateJob = () => {
 	const { id } = useParams();
 	const navigate = useNavigate();
@@ -139,7 +130,7 @@ const UpdateJob = () => {
 						type="submit"
 						className="px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500"
 					>
-						Post Job
+						Update Job
 					</button>
 				</div>
 			</form>
