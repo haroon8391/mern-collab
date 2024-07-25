@@ -8,13 +8,21 @@ const JobPostForm: React.FC = () => {
   const [location, setLocation] = useState("");
   const [company, setCompany] = useState("");
 
+  const resetFields = () => {
+    setTitle("");
+    setDescription("");
+    setSalary("");
+    setLocation("");
+    setCompany("");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const jobPost = { title, description, salary, company, location };
 
     try {
-      const response = await fetch("http://localhost:3001/api/v1/jobs", {
+      const response = await fetch("/api/v1/jobs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,6 +31,8 @@ const JobPostForm: React.FC = () => {
       });
       const data = await response.json();
       console.log("Job Posted Successfully " + data);
+
+      resetFields();
     } catch (err) {
       console.log("Error while posting job " + err);
     }
@@ -31,8 +41,8 @@ const JobPostForm: React.FC = () => {
   };
 
   return (
-    <div className="md:w-3/4 lg:w-3/4 sm:w-full mx-auto p-6 bg-gray-100 shadow-md rounded-md">
-      <h1 className="text-3xl font-bold mb-10 text-center">Create Job Post</h1>
+    <div className="w-full mx-auto p-6 bg-gray-100 shadow-md rounded-md">
+      <h1 className="text-2xl font-bold mb-4">Create Job Post</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="title" className="text-lg font-medium mb-2">
@@ -103,14 +113,12 @@ const JobPostForm: React.FC = () => {
           />
         </div>
 
-        <div className="m-4 flex justify-center">
-          <button
-            type="submit"
-            className="px-3 flex justify-center items-center bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500"
-          >
-            Post Job
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500"
+        >
+          Post Job
+        </button>
       </form>
     </div>
   );
