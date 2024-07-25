@@ -13,9 +13,9 @@ export const getJob = async (req: Request, res: Response) => {
 
   if (!job) {
     return res.status(404).json({ message: "Job not found" });
-  } else {
-    res.json({ status: "success", job });
   }
+
+  res.json(job);
 };
 
 export const createJob = async (req: Request, res: Response) => {
@@ -31,7 +31,7 @@ export const createJob = async (req: Request, res: Response) => {
 
   const newJob = await job.save();
 
-  res.json({ status: "success", newJob });
+  res.json(newJob);
 };
 
 export const updateJob = async (req: Request, res: Response) => {
@@ -44,7 +44,7 @@ export const updateJob = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Job not found" });
   }
 
-  res.json({ status: "success", updatedJob });
+  res.json(updatedJob);
 };
 
 export const deleteJob = async (req: Request, res: Response) => {
@@ -56,5 +56,5 @@ export const deleteJob = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Job not found" });
   }
 
-  res.json({ status: "success", job });
+  res.json(job);
 };
