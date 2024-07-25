@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard";
 import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
+import JobDetails from "./Pages/JobDeatils";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="/" element={<Home />}></Route>
             <Route path="/create-job" element={<CreateJob />} />
             <Route path="/jobs" element={<JobLists />} />
+            <Route path="/jobs/:id" element={<JobDetails />}></Route>
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </div>
