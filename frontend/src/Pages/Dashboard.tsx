@@ -107,17 +107,17 @@ const Dashboard: React.FC = () => {
                     key={job.id}
                     className="hover:bg-gray-100 transition duration-150"
                   >
-                    <td className="py-2 px-4 border-b border-gray-200">
+                    <td className="py-2 px-4 border-b border-gray-200 text-center">
                       {job.title}
                     </td>
-                    <td className="py-2 px-4 border-b border-gray-200">
+                    <td className="py-2 px-4 border-b border-gray-200 text-center">
                       {job.location}
                     </td>
-                    <td className="py-2 px-4 border-b border-gray-200">
+                    <td className="py-2 px-4 border-b border-gray-200 text-center">
                       {new Date(job.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="py-2 px-4 border-b border-gray-200">
-                      <div className="flex space-x-2">
+                    <td className="py-2 px-4 border-b border-gray-200 text-center">
+                      <div className="flex space-x-2 justify-center">
                         <button
                           onClick={() => navigate(`/update-job/${job.id}`)}
                           className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-500"
