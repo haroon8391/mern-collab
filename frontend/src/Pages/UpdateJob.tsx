@@ -12,17 +12,16 @@ const UpdateJob = () => {
 	const [company, setCompany] = useState("");
 
 	useEffect(() => {
-		console.log("Fetching job with id: ", id);
 		const fetchJob = async () => {
 			try {
 				const response = await fetch(`/api/v1/jobs/${id}`);
-				const data = await response.json();
+				const jobData = await response.json();
 
-				setTitle(data.job.title);
-				setDescription(data.job.description);
-				setSalary(data.job.salary);
-				setLocation(data.job.location);
-				setCompany(data.job.company);
+				setTitle(jobData.title);
+				setDescription(jobData.description);
+				setSalary(jobData.salary);
+				setLocation(jobData.location);
+				setCompany(jobData.company);
 			} catch (error) {
 				console.error("Error fetching job:", error);
 			}
@@ -44,9 +43,9 @@ const UpdateJob = () => {
 				body: JSON.stringify(job),
 			});
 			const data = await response.json();
-			console.log("Job Updated Successfully " + data);
+			console.log("Job Updated Successfully ", data);
 		} catch (err) {
-			console.log("Error while updating job " + err);
+			console.log("Error while updating job ", err);
 		}
 
 		navigate("/jobs");

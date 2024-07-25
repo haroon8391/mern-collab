@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
 			setJobs(jobs.filter((job) => job.id !== id));
 		} catch (error) {
 			console.error("Error deleting job:", error);
-			alert("Failed to delete job. Please try again later.");
+			setError("Failed to delete job. Please try again later.");
 		}
 	};
 
