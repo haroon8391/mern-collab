@@ -3,7 +3,7 @@ import cors from "cors";
 import "express-async-errors";
 
 import middleware from "./utils/middleware";
-import jobsRouter from "./routes/jobs.route";
+import jobsRouter from "./routes/jobs.routes";
 
 const app = express();
 
