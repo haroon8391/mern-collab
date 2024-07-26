@@ -28,8 +28,8 @@ const JobDetail: React.FC = () => {
   if (!job) return <div>Loading...</div>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md mt-6">
-      <h1 className="text-3xl font-bold mb-4">{job.title}</h1>
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-2xl rounded-md mt-10">
+      <h1 className="text-3xl font-bold mb-4 text-center">{job.title}</h1>
       <p className="text-lg mb-2">
         <span className="font-medium">Company Name:</span> {job.company}
       </p>
@@ -42,9 +42,14 @@ const JobDetail: React.FC = () => {
       <p className="text-lg mb-4">
         <span className="font-medium">Description:</span> {job.description}
       </p>
-      <Link to="/jobs" className="text-blue-500 hover:underline">
-        Back to Job List
-      </Link>
+      <div className="flex justify-center mb-4 text-white py-2 rounded-lg font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500 hover:cursor-pointer">
+        <Link to={"/jobs/apply"}>Apply</Link>
+      </div>
+      <div className="flex justify-center">
+        <Link to="/jobs" className="text-blue-500 hover:underline text-center">
+          Back to Job List
+        </Link>
+      </div>
     </div>
   );
 };

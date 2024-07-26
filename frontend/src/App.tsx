@@ -7,6 +7,7 @@ import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
 import JobDetails from "./Pages/JobDetails";
 import UpdateJob from "./Pages/UpdateJob";
+import ApplyJob from "./Pages/ApplyJob";
 
 const App = () => {
   return (
@@ -15,12 +16,13 @@ const App = () => {
         <Navbar />
         <div className="md:px-10 sm:px-0">
           <Routes>
-            <Route path="/" element={<Home />}></Route>
+            <Route path="/" element={<Home />} />
             <Route path="/create-job" element={<CreateJob />} />
             <Route path="/jobs" element={<JobLists />} />
             <Route path="/update-job/:id" element={<UpdateJob />} />
-            <Route path="/jobs/:id" element={<JobDetails />}></Route>
+            <Route path="/jobs/:id" element={<JobDetails />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/jobs/apply" element={<ApplyJob />} />
           </Routes>
         </div>
       </div>
