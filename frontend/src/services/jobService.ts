@@ -1,6 +1,6 @@
 import axios from "axios";
 import JobType from "../types/JobTypes";
-const baseUrl = "/api/url";
+const baseUrl = "/api/v1/jobs";
 
 const getAll = async () => {
 	const response = await axios.get(baseUrl);

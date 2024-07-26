@@ -1,5 +1,5 @@
 interface Job {
-	id: string | undefined;
+	id?: string | undefined;
 	title: string;
 	description: string;
 	location: string;

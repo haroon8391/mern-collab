@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import jobService from "../services/jobService";
 
 const UpdateJob = () => {
 	const { id } = useParams();
@@ -35,14 +36,7 @@ const UpdateJob = () => {
 		const job = { title, description, salary, location, company };
 
 		try {
-			const response = await fetch(`/api/v1/jobs/${id}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(job),
-			});
-			const data = await response.json();
+			const data = await jobService.update(id as string, job);
 			console.log("Job Updated Successfully ", data);
 		} catch (err) {
 			console.log("Error while updating job ", err);

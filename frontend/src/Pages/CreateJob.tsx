@@ -1,6 +1,7 @@
 // src/components/JobPostForm.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import jobService from "../services/jobService";
 
 const JobPostForm: React.FC = () => {
 	const navigate = useNavigate();
@@ -11,31 +12,14 @@ const JobPostForm: React.FC = () => {
 	const [location, setLocation] = useState("");
 	const [company, setCompany] = useState("");
 
-	const resetFields = () => {
-		setTitle("");
-		setDescription("");
-		setSalary("");
-		setLocation("");
-		setCompany("");
-	};
-
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
 		const jobPost = { title, description, salary, company, location };
 
 		try {
-			const response = await fetch("/api/v1/jobs", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(jobPost),
-			});
-			const data = await response.json();
+			const data = await jobService.create(jobPost);
 			console.log("Job Posted Successfully " + data);
-
-			resetFields();
 			navigate("/jobs");
 		} catch (err) {
 			console.log("Error while posting job " + err);
@@ -90,7 +74,6 @@ const JobPostForm: React.FC = () => {
 					/>
 				</div>
 
-       
 				<div className="flex flex-col">
 					<label htmlFor="location" className="text-lg font-medium mb-2">
 						Company Name
