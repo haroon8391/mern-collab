@@ -18,6 +18,8 @@ const Navbar: React.FC = () => {
 		setIsOpen(!isOpen);
 	};
 
+	const closeMenu = () => setIsOpen(false);
+
 	return (
 		<nav className="bg-gray-800">
 			<div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
@@ -97,16 +99,20 @@ const Navbar: React.FC = () => {
 				id="mobile-menu"
 			>
 				<div className="flex flex-col justify-center px-2 pt-2 pb-3 space-y-1 sm:px-3">
-					<NavLink to="/" className={navLinkClass}>
+					<NavLink onClick={closeMenu} to="/" className={navLinkClass}>
 						Home
 					</NavLink>
-					<NavLink to="/create-job" className={navLinkClass}>
+					<NavLink
+						onClick={closeMenu}
+						to="/create-job"
+						className={navLinkClass}
+					>
 						Create Job
 					</NavLink>
-					<NavLink to="/jobs" className={navLinkClass}>
+					<NavLink onClick={closeMenu} to="/jobs" className={navLinkClass}>
 						Job List
 					</NavLink>
-					<NavLink to="/dashboard" className={navLinkClass}>
+					<NavLink onClick={closeMenu} to="/dashboard" className={navLinkClass}>
 						Dashboard
 					</NavLink>
 				</div>
