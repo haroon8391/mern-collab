@@ -4,6 +4,7 @@ import "express-async-errors";
 
 import middleware from "./utils/middleware";
 import jobsRouter from "./routes/jobs.routes";
+import userRouter from "./routes/users.routes";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(middleware.requestLogger);
 
 // Routes
 app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1/users", userRouter);
 
 // Error handling middleware
 app.use(middleware.unknownEndpoint);
