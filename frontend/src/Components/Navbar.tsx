@@ -122,7 +122,7 @@ const Navbar: React.FC = () => {
 				<div className="flex flex-col justify-center px-2 pt-2 pb-3 space-y-1 sm:px-3">
 					{NavLinks.map((link) => (
 						<NavLink
-							onClick={closeMenu}
+							onClick={link.onClick || closeMenu}
 							key={link.title}
 							to={link.path}
 							className={navLinkClass}
