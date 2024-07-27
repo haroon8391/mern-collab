@@ -20,6 +20,8 @@ const Login: React.FC = () => {
 
     try {
       const userData = await loginService.login(credentials);
+      console.log(userData);
+
       dispatch(login(userData));
       alert("Login successful!");
       navigate("/");
