@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Link, NavLinkRenderProps } from "react-router-dom";
+import { logout } from "../store/authSlice";
 
 const Navbar: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const dispatch = useDispatch();
 
 	const navLinkClass = ({ isActive }: NavLinkRenderProps) => {
 		const navLinkStyles = `${
@@ -21,13 +23,24 @@ const Navbar: React.FC = () => {
 
 	const closeMenu = () => setIsOpen(false);
 
+	const handleLogout = () => {
+		dispatch(logout());
+		closeMenu();
+	};
+
+	const emptyFunction = () => {};
+
 	const isAuth = useSelector((state: any) => state.authSlice.isAuthenticated);
 	const NavLinks = [
 		{ title: "Home", path: "/" },
 		{ title: "Create Job", path: "/create-job" },
 		{ title: "Job List", path: "/jobs" },
 		{ title: "Dashboard", path: "/dashboard" },
-		{ title: isAuth ? "Logout" : "Login", path: isAuth ? "/" : "/login" },
+		{
+			title: isAuth ? "Logout" : "Login",
+			path: isAuth ? "/" : "/login",
+			onClick: isAuth ? handleLogout : emptyFunction,
+		},
 	];
 
 	return (
@@ -47,6 +60,7 @@ const Navbar: React.FC = () => {
 										key={link.title}
 										to={link.path}
 										className={navLinkClass}
+										onClick={link.onClick}
 									>
 										{link.title}
 									</NavLink>
