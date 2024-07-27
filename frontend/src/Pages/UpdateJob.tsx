@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-interface Job {
-	id: string;
-	title: string;
-	description: string;
-	location: string;
-	salary: string;
-	company: string;
-}
+import jobService from "../services/jobService";
 
 const UpdateJob = () => {
 	const { id } = useParams();
@@ -21,17 +13,16 @@ const UpdateJob = () => {
 	const [company, setCompany] = useState("");
 
 	useEffect(() => {
-		console.log("Fetching job with id: ", id);
 		const fetchJob = async () => {
 			try {
 				const response = await fetch(`/api/v1/jobs/${id}`);
-				const data = await response.json();
+				const jobData = await response.json();
 
-				setTitle(data.job.title);
-				setDescription(data.job.description);
-				setSalary(data.job.salary);
-				setLocation(data.job.location);
-				setCompany(data.job.company);
+				setTitle(jobData.title);
+				setDescription(jobData.description);
+				setSalary(jobData.salary);
+				setLocation(jobData.location);
+				setCompany(jobData.company);
 			} catch (error) {
 				console.error("Error fetching job:", error);
 			}
@@ -45,20 +36,12 @@ const UpdateJob = () => {
 		const job = { title, description, salary, location, company };
 
 		try {
-			const response = await fetch(`/api/v1/jobs/${id}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(job),
-			});
-			const data = await response.json();
-			console.log("Job Updated Successfully " + data);
+			const data = await jobService.update(id as string, job);
+			console.log("Job Updated Successfully ", data);
+			navigate("/jobs");
 		} catch (err) {
-			console.log("Error while updating job " + err);
+			console.log("Error while updating job ", err);
 		}
-
-		navigate("/jobs");
 	};
 
 	return (
@@ -139,7 +122,7 @@ const UpdateJob = () => {
 						type="submit"
 						className="px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500"
 					>
-						Post Job
+						Update Job
 					</button>
 				</div>
 			</form>

@@ -1,6 +1,7 @@
 // src/components/JobPostForm.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import jobService from "../services/jobService";
 
 const JobPostForm: React.FC = () => {
 	const navigate = useNavigate();
@@ -11,31 +12,14 @@ const JobPostForm: React.FC = () => {
 	const [location, setLocation] = useState("");
 	const [company, setCompany] = useState("");
 
-	const resetFields = () => {
-		setTitle("");
-		setDescription("");
-		setSalary("");
-		setLocation("");
-		setCompany("");
-	};
-
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
 		const jobPost = { title, description, salary, company, location };
 
 		try {
-			const response = await fetch("/api/v1/jobs", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(jobPost),
-			});
-			const data = await response.json();
+			const data = await jobService.create(jobPost);
 			console.log("Job Posted Successfully " + data);
-
-			resetFields();
 			navigate("/jobs");
 		} catch (err) {
 			console.log("Error while posting job " + err);
@@ -120,7 +104,7 @@ const JobPostForm: React.FC = () => {
 				<div className="flex justify-center">
 					<button
 						type="submit"
-						className="px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500"
+						className="px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500 hover:font-bold"
 					>
 						Post Job
 					</button>
