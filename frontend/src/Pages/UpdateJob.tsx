@@ -38,11 +38,10 @@ const UpdateJob = () => {
 		try {
 			const data = await jobService.update(id as string, job);
 			console.log("Job Updated Successfully ", data);
+			navigate("/jobs");
 		} catch (err) {
 			console.log("Error while updating job ", err);
 		}
-
-		navigate("/jobs");
 	};
 
 	return (
