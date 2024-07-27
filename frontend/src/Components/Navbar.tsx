@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Link, NavLinkRenderProps } from "react-router-dom";
 
@@ -20,6 +21,15 @@ const Navbar: React.FC = () => {
 
 	const closeMenu = () => setIsOpen(false);
 
+	const isAuth = useSelector((state: any) => state.authSlice.isAuthenticated);
+	const NavLinks = [
+		{ title: "Home", path: "/" },
+		{ title: "Create Job", path: "/create-job" },
+		{ title: "Job List", path: "/jobs" },
+		{ title: "Dashboard", path: "/dashboard" },
+		{ title: isAuth ? "Logout" : "Login", path: isAuth ? "/" : "/login" },
+	];
+
 	return (
 		<nav className="bg-gray-800">
 			<div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,18 +42,15 @@ const Navbar: React.FC = () => {
 						</div>
 						<div className="hidden md:block">
 							<div className="ml-20 flex items-baseline space-x-4">
-								<NavLink to="/" className={navLinkClass}>
-									Home
-								</NavLink>
-								<NavLink to="/create-job" className={navLinkClass}>
-									Create Job
-								</NavLink>
-								<NavLink to="/jobs" className={navLinkClass}>
-									Job List
-								</NavLink>
-								<NavLink to="/dashboard" className={navLinkClass}>
-									Dashboard
-								</NavLink>
+								{NavLinks.map((link) => (
+									<NavLink
+										key={link.title}
+										to={link.path}
+										className={navLinkClass}
+									>
+										{link.title}
+									</NavLink>
+								))}
 							</div>
 						</div>
 					</div>
@@ -99,22 +106,16 @@ const Navbar: React.FC = () => {
 				id="mobile-menu"
 			>
 				<div className="flex flex-col justify-center px-2 pt-2 pb-3 space-y-1 sm:px-3">
-					<NavLink onClick={closeMenu} to="/" className={navLinkClass}>
-						Home
-					</NavLink>
-					<NavLink
-						onClick={closeMenu}
-						to="/create-job"
-						className={navLinkClass}
-					>
-						Create Job
-					</NavLink>
-					<NavLink onClick={closeMenu} to="/jobs" className={navLinkClass}>
-						Job List
-					</NavLink>
-					<NavLink onClick={closeMenu} to="/dashboard" className={navLinkClass}>
-						Dashboard
-					</NavLink>
+					{NavLinks.map((link) => (
+						<NavLink
+							onClick={closeMenu}
+							key={link.title}
+							to={link.path}
+							className={navLinkClass}
+						>
+							{link.title}
+						</NavLink>
+					))}
 				</div>
 			</div>
 		</nav>

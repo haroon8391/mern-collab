@@ -1,16 +1,17 @@
 import "./App.css";
-import JobLists from "./Pages/JobLists";
-import CreateJob from "./Pages/CreateJob";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Dashboard from "./Pages/Dashboard";
-import Home from "./Pages/Home";
-import JobDetails from "./Pages/JobDetails";
-import UpdateJob from "./Pages/UpdateJob";
-import ApplyJob from "./Pages/ApplyJob";
-import Register from "./Pages/Register";
-import Login from "./Pages/Login";
-import Navbar from "./Components/Navbar";
-import AuthLayout from "./Components/AuthLayout";
+import { AuthLayout, Navbar } from "./Components";
+import {
+	ApplyJob,
+	CreateJob,
+	Dashboard,
+	Home,
+	JobDetails,
+	JobLists,
+	Login,
+	Register,
+	UpdateJob,
+} from "./Pages";
 
 const App = () => {
 	return (
