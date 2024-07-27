@@ -5,14 +5,14 @@ const userRouter = Router();
 
 // Routes
 userRouter
-	.route("/")
-	.get(usersController.getUsers)
-	.post(usersController.createUser);
+  .route("/")
+  .get(usersController.getUsers)
+  .post(usersController.createUser);
 
 userRouter
-	.route("/:id")
-	.get(usersController.getUser)
-	.put(usersController.updateUser)
-	.delete(usersController.deleteUser);
+  .route("/:id")
+  .get(usersController.getUser)
+  .put(usersController.updateUser)
+  .delete(usersController.deleteUser);
 
 export default userRouter;

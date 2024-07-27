@@ -9,6 +9,7 @@
     "skipLibCheck": true,
     "jsx": "react" // Add this line if you are using .tsx files
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "typeRoots": ["./node_modules/@types", "./types"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "types/**/*.d.ts"],
   "exclude": ["node_modules"]
 }
