@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Link, NavLinkRenderProps } from "react-router-dom";
 import { logout } from "../store/authSlice";
+import { toast } from "react-toastify";
 
 const Navbar: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +26,7 @@ const Navbar: React.FC = () => {
 
 	const handleLogout = () => {
 		dispatch(logout());
+		toast("Logged out successfully", { type: "success" });
 	};
 
 	const emptyFunction = () => {};

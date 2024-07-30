@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import jobService from "../services/jobService";
+import { toast } from "react-toastify";
+import Job from "../types/JobTypes";
 
 const UpdateJob = () => {
 	const { id } = useParams();
@@ -25,6 +27,7 @@ const UpdateJob = () => {
 				setCompany(jobData.company);
 			} catch (error) {
 				console.error("Error fetching job:", error);
+				toast("Could not fetch job", { type: "error" });
 			}
 		};
 
@@ -36,11 +39,15 @@ const UpdateJob = () => {
 		const job = { title, description, salary, location, company };
 
 		try {
-			const data = await jobService.update(id as string, job);
+			const data = await jobService.update(id as string, job as Job);
 			console.log("Job Updated Successfully ", data);
+			toast("Job Updated Successfully", { type: "success" });
 			navigate("/jobs");
 		} catch (err) {
 			console.log("Error while updating job ", err);
+			toast("Some error occured while updating job. Try Again.", {
+				type: "error",
+			});
 		}
 	};
 
