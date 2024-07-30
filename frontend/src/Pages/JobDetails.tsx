@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 interface Job {
   id: string;
@@ -43,12 +43,15 @@ const JobDetail: React.FC = () => {
         <span className="font-medium">Description:</span> {job.description}
       </p>
       <div className="flex justify-center mb-4 text-white py-2 rounded-lg font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500 hover:cursor-pointer">
-        <Link to={"/jobs/apply"}>Apply</Link>
+        <NavLink to={"/jobs/apply"}>Apply</NavLink>
       </div>
       <div className="flex justify-center">
-        <Link to="/jobs" className="text-blue-500 hover:underline text-center">
+        <NavLink
+          to="/jobs"
+          className="text-blue-500 hover:underline text-center"
+        >
           Back to Job List
-        </Link>
+        </NavLink>
       </div>
     </div>
   );
