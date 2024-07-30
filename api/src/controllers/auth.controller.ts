@@ -40,7 +40,21 @@ const login = async (req: Request, res: Response) => {
 
 // POST /api/v1/auth/register
 const register = async (req: Request, res: Response) => {
-	res.status(201).json({ message: "User created" });
+	const { name, email, password, role } = req.body;
+
+	const saltRounds = 10;
+	const passwordHash = await bcrypt.hash(password, saltRounds);
+
+	const user = new User({
+		name,
+		email,
+		password: passwordHash,
+		role,
+	});
+
+	await user.save();
+
+	res.status(201).json({ message: "User created", user });
 };
 
 export default {
