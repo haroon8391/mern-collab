@@ -1,44 +1,31 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
+import bcrypt from "bcrypt";
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Username is required"],
-    minlength: [3, "Username must be at least 3 characters long"],
-  },
-  email: {
-    type: String,
-    required: [true, "Email is required"],
-    unique: true,
-    minlength: [6, "Email must be at least 6 characters long"],
-  },
-  password: {
-    type: String,
-    required: [true, "Password is required"],
-    minlength: [6, "Password must be at least 6 characters long"],
-  },
-  admin: {
-    type: Boolean,
-    default: false,
-  },
-  jobs: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Job",
-    },
-  ],
+// Define the User interface
+interface IUser extends Document {
+  name: string;
+  email: string;
+  password: string;
+  admin: boolean;
+  comparePassword(candidatePassword: string): Promise<boolean>;
+}
+
+// Define the User schema
+const userSchema = new Schema<IUser>({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  admin: { type: Boolean, default: false },
 });
 
-userSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString();
+// Add the comparePassword method to the User schema
+userSchema.methods.comparePassword = async function (
+  candidatePassword: string
+) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
 
-    delete returnedObject.password;
-    delete returnedObject._id;
-    delete returnedObject.__v;
-  },
-});
-
-const User = mongoose.model("User", userSchema);
+// Create the User model
+const User = mongoose.model<IUser>("User", userSchema);
 
 export default User;
