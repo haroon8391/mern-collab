@@ -18,6 +18,7 @@ const getToken = () => {
 
 const getAll = async () => {
   const response = await axios.get(baseUrl);
+
   return response.data;
 };
 
