@@ -2,10 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import { verifyToken } from "../utils/tokenUtils";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "./config";
+import User from "../models/User.model";
 
 declare module "express-serve-static-core" {
 	interface Request {
-		user?: JwtPayload;
+		user?: any;
 	}
 }
 
@@ -66,7 +67,11 @@ const errorHandler = (
 	next(error);
 };
 
-const authentication = (req: Request, res: Response, next: NextFunction) => {
+const authentication = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
 	const authHeader = req.headers.authorization;
 	if (!authHeader) {
 		return res.status(401).json({ error: "No token provided" });
@@ -74,10 +79,23 @@ const authentication = (req: Request, res: Response, next: NextFunction) => {
 	const token = authHeader.split(" ")[1];
 	try {
 		const payload = jwt.verify(token, config.JWT_SECRET) as JwtPayload;
+
 		if (!payload.userId) {
 			return res.status(401).json({ error: "Invalid token" });
 		}
-		req.user = payload;
+
+		const user = await User.findById(payload.userId);
+		if (!user) {
+			return res.status(401).json({ error: "No User " });
+		}
+
+		req.user = {
+			userId: user._id,
+			name: user.name,
+			email: user.email,
+			admin: user.admin,
+		};
+
 		next();
 	} catch (error) {
 		console.error("Error in authMiddleware: ", error);

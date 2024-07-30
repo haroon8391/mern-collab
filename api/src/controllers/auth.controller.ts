@@ -34,21 +34,12 @@ const login = async (req: Request, res: Response) => {
 
 // POST /api/v1/auth/register
 const register = async (req: Request, res: Response) => {
-	const { name, email, password, admin } = req.body;
+	const user = new User(req.body);
 
-	const saltRounds = 10;
-	const passwordHash = await bcrypt.hash(password, saltRounds);
+	const userInDb = await user.save();
+	const token = userInDb.createJWT();
 
-	const user = new User({
-		name,
-		email,
-		password: passwordHash,
-		admin,
-	});
-
-	await user.save();
-
-	res.status(201).json({ user: { name: user.name } });
+	res.status(201).json({ user: { name: user.name }, token });
 };
 
 export default {
