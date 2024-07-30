@@ -12,11 +12,11 @@ const JobPostForm: React.FC = () => {
   const [salary, setSalary] = useState("");
   const [company, setCompany] = useState("");
   const [location, setLocation] = useState("");
-  const [jobCategory, setJobCategory] = useState("");
-  const [experienceRequired, setExperienceRequired] = useState("");
-  const [jobVacancy, setJobVacancy] = useState("");
-  const [jobDeadline, setJobDeadline] = useState("");
-  const [jobType, setJobType] = useState<string>("");
+  const [job_category, setJob_category] = useState("");
+  const [job_experience, setJob_experience] = useState("");
+  const [job_vacancy, setJob_vacancy] = useState("");
+  const [job_deadline, setJob_deadline] = useState("");
+  const [job_type, setJob_type] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,11 +27,11 @@ const JobPostForm: React.FC = () => {
       salary,
       company,
       location,
-      jobCategory,
-      experienceRequired,
-      jobVacancy,
-      jobDeadline,
-      jobType,
+      job_category,
+      job_experience,
+      job_vacancy,
+      job_deadline,
+      job_type,
     };
 
     try {
@@ -126,8 +126,8 @@ const JobPostForm: React.FC = () => {
           <input
             type="text"
             id="jobCategory"
-            value={jobCategory}
-            onChange={(e) => setJobCategory(e.target.value)}
+            value={job_category}
+            onChange={(e) => setJob_category(e.target.value)}
             className="p-2 border border-gray-300 rounded-md"
             required
           />
@@ -140,8 +140,8 @@ const JobPostForm: React.FC = () => {
           <input
             type="number"
             id="jobExperience"
-            value={experienceRequired}
-            onChange={(e) => setExperienceRequired(e.target.value)}
+            value={job_experience}
+            onChange={(e) => setJob_experience(e.target.value)}
             className="p-2 border border-gray-300 rounded-md"
             required
           />
@@ -154,8 +154,8 @@ const JobPostForm: React.FC = () => {
           <input
             type="number"
             id="jobVacancy"
-            value={jobVacancy}
-            onChange={(e) => setJobVacancy(e.target.value)}
+            value={job_vacancy}
+            onChange={(e) => setJob_vacancy(e.target.value)}
             className="p-2 border border-gray-300 rounded-md"
             required
           />
@@ -168,8 +168,8 @@ const JobPostForm: React.FC = () => {
           <input
             type="date"
             id="jobDeadline"
-            value={jobDeadline}
-            onChange={(e) => setJobDeadline(e.target.value)}
+            value={job_deadline}
+            onChange={(e) => setJob_deadline(e.target.value)}
             className="p-2 border border-gray-300 rounded-md"
             required
           />
@@ -181,8 +181,8 @@ const JobPostForm: React.FC = () => {
           </label>
           <select
             id="jobType"
-            value={jobType}
-            onChange={(e) => setJobType(e.target.value)}
+            value={job_type}
+            onChange={(e) => setJob_type(e.target.value)}
             className="p-2 border border-gray-300 rounded-md"
             required
           >
