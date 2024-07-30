@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Job from "../models/Job.model";
+import User from "../models/User.model";
 
 export const getJobs = async (req: Request, res: Response) => {
 	const { createdBy } = req.query;
@@ -35,6 +36,20 @@ export const updateJob = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const body = req.body;
 
+	const userInDb = await User.findById(req.user?.userId);
+	if (!userInDb) {
+		return res.status(404).json({ message: "User not found" });
+	}
+
+	const jobInDb = await Job.findById(id);
+	if (!jobInDb) {
+		return res.status(404).json({ message: "Job not found" });
+	}
+
+	if (jobInDb.createdBy.toString() !== req.user?.userId) {
+		return res.status(401).json({ message: "Unauthorized" });
+	}
+
 	const updatedJob = await Job.findByIdAndUpdate(id, body, { new: true });
 
 	if (!updatedJob) {
@@ -46,6 +61,20 @@ export const updateJob = async (req: Request, res: Response) => {
 
 export const deleteJob = async (req: Request, res: Response) => {
 	const { id } = req.params;
+
+	const userInDb = await User.findById(req.user?.userId);
+	if (!userInDb) {
+		return res.status(404).json({ message: "User not found" });
+	}
+
+	const jobInDb = await Job.findById(id);
+	if (!jobInDb) {
+		return res.status(404).json({ message: "Job not found" });
+	}
+
+	if (jobInDb.createdBy.toString() !== req.user?.userId) {
+		return res.status(401).json({ message: "Unauthorized" });
+	}
 
 	const job = await Job.findByIdAndDelete(id);
 
