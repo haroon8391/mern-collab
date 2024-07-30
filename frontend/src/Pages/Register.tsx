@@ -6,7 +6,7 @@ const Register: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isJobPoster, setIsJobPoster] = useState(false);
+  const [admin, setAdmin] = useState(false);
 
   const navigate = useNavigate();
 
@@ -19,14 +19,14 @@ const Register: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password, isJobPoster }),
+        body: JSON.stringify({ name, email, password, admin }),
       });
 
       if (response.ok) {
         setEmail("");
         setPassword("");
         setName("");
-        setIsJobPoster(false);
+        setAdmin(false);
         alert("Registration successful!");
         navigate("/");
       } else {
@@ -94,8 +94,8 @@ const Register: React.FC = () => {
             <input
               id="jobPoster"
               type="checkbox"
-              checked={isJobPoster}
-              onChange={() => setIsJobPoster(!isJobPoster)}
+              checked={admin}
+              onChange={() => setAdmin(!admin)}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             />
             <label
