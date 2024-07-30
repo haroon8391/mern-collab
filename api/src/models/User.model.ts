@@ -9,6 +9,7 @@ interface IUser extends Document {
 	password: string;
 	admin: boolean;
 	comparePassword(candidatePassword: string): Promise<boolean>;
+	createJWT(): string;
 }
 
 // Define the User schema
