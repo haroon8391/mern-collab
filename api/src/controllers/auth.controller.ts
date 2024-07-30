@@ -17,10 +17,8 @@ const login = async (req: Request, res: Response) => {
     return res.status(401).json({ error: "Invalid email or password" });
   }
 
-  const isPasswordCorrect = await userInDb.comparePassword(
-    userInDb.password,
-    password
-  );
+  const isPasswordCorrect = await userInDb.comparePassword(password);
+
   if (!isPasswordCorrect) {
     return res.status(401).json({ error: "Invalid email or password" });
   }
