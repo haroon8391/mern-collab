@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 
 import User from "../models/User.model";
-import config from "../utils/config";
 
 // POST /api/v1/auth/login
 const login = async (req: Request, res: Response) => {
@@ -13,48 +10,31 @@ const login = async (req: Request, res: Response) => {
 		return res.status(400).json({ error: "Email and password are required" });
 	}
 
-	const user = await User.findOne({ email });
-	if (!user) {
+	const userInDb = await User.findOne({ email });
+	if (!userInDb) {
 		return res.status(401).json({ error: "Invalid email or password" });
 	}
 
-	const isPasswordCorrect = await bcrypt.compare(password, user.password);
+	const isPasswordCorrect = await userInDb.comparePassword(password);
 	if (!isPasswordCorrect) {
 		return res.status(401).json({ error: "Invalid email or password" });
 	}
 
-	const userForToken = {
-		name: user.name,
-		id: user._id,
-	};
-
-	const token = jwt.sign(userForToken, config.JWT_SECRET, {
-		expiresIn: "1h",
-	});
-
+	const token = userInDb.createJWT();
 	res.status(200).send({
+		name: userInDb.name,
 		token,
-		name: user.name,
 	});
 };
 
 // POST /api/v1/auth/register
 const register = async (req: Request, res: Response) => {
-	const { name, email, password, role } = req.body;
+	const newUserInstance = new User({ ...req.body });
 
-	const saltRounds = 10;
-	const passwordHash = await bcrypt.hash(password, saltRounds);
+	const userCreatedInDb = await newUserInstance.save();
+	const token = userCreatedInDb.createJWT();
 
-	const user = new User({
-		name,
-		email,
-		password: passwordHash,
-		role,
-	});
-
-	await user.save();
-
-	res.status(201).json({ message: "User created", user });
+	res.status(201).json({ user: { name: userCreatedInDb.name }, token });
 };
 
 export default {

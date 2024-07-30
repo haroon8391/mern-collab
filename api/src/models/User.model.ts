@@ -1,6 +1,19 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
+import config from "../utils/config";
 
-const userSchema = new mongoose.Schema({
+interface IUser extends Document {
+	name: string;
+	email: string;
+	password: string;
+	role: "user" | "admin";
+	jobs: mongoose.Schema.Types.ObjectId[];
+	comparePassword(password: string): Promise<boolean>;
+	createJWT(): string;
+}
+
+const userSchema: Schema<IUser> = new mongoose.Schema({
 	name: {
 		type: String,
 		required: [true, "Username is required"],
@@ -39,6 +52,23 @@ userSchema.set("toJSON", {
 		delete returnedObject.__v;
 	},
 });
+
+userSchema.pre("save", async function () {
+	const salt = await bcryptjs.genSalt(10);
+	this.password = await bcryptjs.hash(this.password, salt);
+});
+
+userSchema.methods.comparePassword = async function (password: string) {
+	return await bcryptjs.compare(password, this.password);
+};
+
+userSchema.methods.createJWT = function () {
+	const payload = { userId: this._id, role: this.role };
+	const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
+		expiresIn: "1d",
+	});
+	return token;
+};
 
 const User = mongoose.model("User", userSchema);
 
