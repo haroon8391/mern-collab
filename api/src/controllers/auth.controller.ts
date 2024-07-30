@@ -35,12 +35,13 @@ const login = async (req: Request, res: Response) => {
   res.status(200).send({
     token,
     name: user.name,
+    role: user.admin,
   });
 };
 
 // POST /api/v1/auth/register
 const register = async (req: Request, res: Response) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, admin } = req.body;
 
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
@@ -49,7 +50,7 @@ const register = async (req: Request, res: Response) => {
     name,
     email,
     password: passwordHash,
-    role,
+    admin,
   });
 
   await user.save();
