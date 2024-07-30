@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import jobService from "../services/jobService";
 
 interface Job {
 	id: string;
@@ -17,10 +18,9 @@ const JobDetail: React.FC = () => {
 
 	useEffect(() => {
 		const fetchJob = async () => {
-			const response = await fetch(`/api/v1/jobs/${id}`);
-			const data = await response.json();
-			setJob(data);
-			console.log(data);
+			const jobDetails = await jobService.getOne(id);
+			setJob(jobDetails);
+			console.log(jobDetails);
 		};
 		fetchJob();
 	}, [id]);
