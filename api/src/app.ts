@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(middleware.requestLogger);
 
 // Routes
-app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1/jobs", middleware.authentication, jobsRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
 

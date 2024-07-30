@@ -19,7 +19,7 @@ export const getJob = async (req: Request, res: Response) => {
 };
 
 export const createJob = async (req: Request, res: Response) => {
-	req.body.createdBy = "66a8b3c11ce8ffcea913aaf5"; // TODO Change this as soon as possible
+	req.body.createdBy = req.user?.userId;
 	const job = new Job(req.body);
 	const newJob = await job.save();
 	res.json(newJob);
