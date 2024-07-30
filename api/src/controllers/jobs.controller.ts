@@ -2,7 +2,13 @@ import { Request, Response } from "express";
 import Job from "../models/Job.model";
 
 export const getJobs = async (req: Request, res: Response) => {
-	const jobs = await Job.find();
+	const { createdBy } = req.query;
+
+	const queryObject = {
+		...(createdBy && { createdBy }),
+	};
+
+	const jobs = await Job.find(queryObject);
 	res.json(jobs);
 };
 

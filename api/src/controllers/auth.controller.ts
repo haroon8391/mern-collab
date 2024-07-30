@@ -28,6 +28,7 @@ const login = async (req: Request, res: Response) => {
 	res.status(200).send({
 		token,
 		name: userInDb.name,
+		userId: userInDb._id,
 		role: userInDb.admin,
 	});
 };

@@ -16,12 +16,14 @@ const getToken = () => {
 	return null; // Return null if no userData is found
 };
 
-const getAll = async () => {
+const getAll = async (userId: String) => {
 	const token = getToken();
 	if (!token) {
 		throw new Error("No token found in Local Storage");
 	}
-	const response = await axios.get(baseUrl, {
+
+	const urlToFetch = userId ? `${baseUrl}?createdBy=${userId}` : baseUrl;
+	const response = await axios.get(urlToFetch, {
 		headers: { Authorization: `Bearer ${token}` },
 	});
 	return response.data;
