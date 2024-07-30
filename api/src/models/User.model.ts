@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-	username: {
+	name: {
 		type: String,
 		required: [true, "Username is required"],
 		minlength: [3, "Username must be at least 3 characters long"],
@@ -17,6 +17,17 @@ const userSchema = new mongoose.Schema({
 		required: [true, "Password is required"],
 		minlength: [6, "Password must be at least 6 characters long"],
 	},
+	role: {
+		type: String,
+		enum: ["user", "admin"],
+		default: "user",
+	},
+	jobs: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Job",
+		},
+	],
 });
 
 userSchema.set("toJSON", {
