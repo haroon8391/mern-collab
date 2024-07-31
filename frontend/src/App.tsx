@@ -1,4 +1,5 @@
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthLayout, Navbar } from "./Components";
 import {
@@ -12,12 +13,14 @@ import {
   Register,
   UpdateJob,
 } from "./Pages";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
     <Router>
       <div className="App">
         <Navbar />
+        <ToastContainer />
         <div className="md:px-10 sm:px-0">
           <Routes>
             <Route path="/" element={<Home />} />

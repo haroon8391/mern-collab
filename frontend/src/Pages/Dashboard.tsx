@@ -20,6 +20,7 @@ const Dashboard: React.FC = () => {
 	const isAuthenticated = useSelector(
 		(state: any) => state.authSlice.isAuthenticated
 	);
+	const userData = useSelector((state: any) => state.authSlice.userData);
 	console.log(isAuthenticated);
 
 	const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Dashboard: React.FC = () => {
 	useEffect(() => {
 		const fetchJobs = async () => {
 			try {
-				const data = await jobService.getAll();
+				const data = await jobService.getAll(userData.userId);
 				const sortedJobs = data.sort((a: Job, b: Job) =>
 					a.createdAt > b.createdAt ? -1 : 1
 				);

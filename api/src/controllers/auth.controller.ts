@@ -1,46 +1,49 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-
 import User from "../models/User.model";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import config from "../utils/config";
 
 // POST /api/v1/auth/login
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  // Check if email and password are provided
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
   }
 
-  // Get user from database
-  const user = await User.findOne({ email });
-  if (!user) {
+  const userInDb = await User.findOne({ email });
+  if (!userInDb) {
     return res.status(401).json({ error: "Invalid email or password" });
   }
 
-  // Check if password is correct
-  const passwordCorrect = await bcrypt.compare(password, user.password);
-  if (!passwordCorrect) {
+  const isPasswordCorrect = await userInDb.comparePassword(password);
+
+  if (!isPasswordCorrect) {
     return res.status(401).json({ error: "Invalid email or password" });
   }
 
-  const userForToken = {
-    username: user.username,
-    id: user._id,
-  };
-
-  const token = jwt.sign(userForToken, config.JWT_SECRET, {
-    expiresIn: "1h",
-  });
+  const token = userInDb.createJWT();
 
   res.status(200).send({
     token,
-    username: user.username,
+    name: userInDb.name,
+    userId: userInDb._id,
+    isAdmin: userInDb.admin,
   });
+};
+
+// POST /api/v1/auth/register
+const register = async (req: Request, res: Response) => {
+  const user = new User(req.body);
+
+  const userInDb = await user.save();
+  const token = userInDb.createJWT();
+
+  res.status(201).json({ user: { name: user.name }, token });
 };
 
 export default {
   login,
+  register,
 };

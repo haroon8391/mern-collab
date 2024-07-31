@@ -1,60 +1,86 @@
 import { Request, Response } from "express";
 import Job from "../models/Job.model";
+import User from "../models/User.model";
 
 export const getJobs = async (req: Request, res: Response) => {
-  const jobs = await Job.find();
-  res.json(jobs);
+	const { createdBy } = req.query;
+
+	const queryObject = {
+		...(createdBy && { createdBy }),
+	};
+
+	const jobs = await Job.find(queryObject);
+	res.json(jobs);
 };
 
 export const getJob = async (req: Request, res: Response) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  const job = await Job.findById(id);
+	const job = await Job.findById(id);
 
-  if (!job) {
-    return res.status(404).json({ message: "Job not found" });
-  }
+	if (!job) {
+		return res.status(404).json({ message: "Job not found" });
+	}
 
-  res.json(job);
+	res.json(job);
 };
 
 export const createJob = async (req: Request, res: Response) => {
-  const { title, description, company, location, salary } = req.body;
-
-  const job = new Job({
-    title,
-    description,
-    salary,
-    company,
-    location,
-  });
-
-  const newJob = await job.save();
-
-  res.json(newJob);
+	req.body.createdBy = req.user?.userId;
+	const job = new Job(req.body);
+	const newJob = await job.save();
+	res.json(newJob);
 };
 
 export const updateJob = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const body = req.body;
+	const { id } = req.params;
+	const body = req.body;
 
-  const updatedJob = await Job.findByIdAndUpdate(id, body, { new: true });
+	const userInDb = await User.findById(req.user?.userId);
+	if (!userInDb) {
+		return res.status(404).json({ message: "User not found" });
+	}
 
-  if (!updatedJob) {
-    return res.status(404).json({ message: "Job not found" });
-  }
+	const jobInDb = await Job.findById(id);
+	if (!jobInDb) {
+		return res.status(404).json({ message: "Job not found" });
+	}
 
-  res.json(updatedJob);
+	if (jobInDb.createdBy.toString() !== req.user?.userId) {
+		return res.status(401).json({ message: "Unauthorized" });
+	}
+
+	const updatedJob = await Job.findByIdAndUpdate(id, body, { new: true });
+
+	if (!updatedJob) {
+		return res.status(404).json({ message: "Job not found" });
+	}
+
+	res.json(updatedJob);
 };
 
 export const deleteJob = async (req: Request, res: Response) => {
-  const { id } = req.params;
+	const { id } = req.params;
 
-  const job = await Job.findByIdAndDelete(id);
+	const userInDb = await User.findById(req.user?.userId);
+	if (!userInDb) {
+		return res.status(404).json({ message: "User not found" });
+	}
 
-  if (!job) {
-    return res.status(404).json({ message: "Job not found" });
-  }
+	const jobInDb = await Job.findById(id);
+	if (!jobInDb) {
+		return res.status(404).json({ message: "Job not found" });
+	}
 
-  res.json(job);
+	if (jobInDb.createdBy.toString() !== req.user?.userId) {
+		return res.status(401).json({ message: "Unauthorized" });
+	}
+
+	const job = await Job.findByIdAndDelete(id);
+
+	if (!job) {
+		return res.status(404).json({ message: "Job not found" });
+	}
+
+	res.json(job);
 };

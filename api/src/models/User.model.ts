@@ -1,34 +1,55 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
+import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
+import config from "../utils/config";
 
-const userSchema = new mongoose.Schema({
-	username: {
+interface IUser extends Document {
+	name: string;
+	email: string;
+	password: string;
+	admin: boolean;
+	comparePassword(candidatePassword: string): Promise<boolean>;
+	createJWT(): string;
+}
+
+// Define the User schema
+const userSchema = new Schema<IUser>({
+	name: {
 		type: String,
-		required: [true, "Username is required"],
-		minlength: [3, "Username must be at least 3 characters long"],
+		required: true,
 	},
 	email: {
 		type: String,
-		required: [true, "Email is required"],
+		required: true,
 		unique: true,
-		minlength: [6, "Email must be at least 6 characters long"],
 	},
 	password: {
 		type: String,
-		required: [true, "Password is required"],
-		minlength: [6, "Password must be at least 6 characters long"],
+		required: true,
+	},
+	admin: {
+		type: Boolean,
+		default: false,
 	},
 });
 
-userSchema.set("toJSON", {
-	transform: (document, returnedObject) => {
-		returnedObject.id = returnedObject._id.toString();
-
-		delete returnedObject.password;
-		delete returnedObject._id;
-		delete returnedObject.__v;
-	},
+userSchema.pre("save", async function () {
+	const salt = await bcryptjs.genSalt(10);
+	this.password = await bcryptjs.hash(this.password, salt);
 });
 
-const User = mongoose.model("User", userSchema);
+userSchema.methods.comparePassword = async function (
+	candidatePassword: string
+) {
+	return await bcryptjs.compare(candidatePassword, this.password);
+};
+
+userSchema.methods.createJWT = function () {
+	const userForToken = { userId: this._id, name: this.name };
+	const token = jwt.sign(userForToken, config.JWT_SECRET, { expiresIn: "1h" });
+	return token;
+};
+
+const User = mongoose.model<IUser>("User", userSchema);
 
 export default User;

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import loginService from "../services/loginService";
 import { useDispatch } from "react-redux";
 import { login } from "../store/authSlice";
+import { toast } from "react-toastify";
 
 const Login: React.FC = () => {
 	const [email, setEmail] = useState("");
@@ -21,10 +22,11 @@ const Login: React.FC = () => {
 		try {
 			const userData = await loginService.login(credentials);
 			dispatch(login(userData));
-			alert("Login successful!");
+			toast("Login successful", { type: "success" });
 			navigate("/");
 		} catch (error) {
-			alert("An error occurred. Please try again.");
+			console.log("Error logging in", error);
+			toast("Invalid email or password", { type: "error" });
 		}
 	};
 
