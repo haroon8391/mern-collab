@@ -8,7 +8,7 @@ interface IJob extends Document {
   qualities?: string;
 }
 
-const JobSchema: Schema = new Schema({
+const applyJobSchema: Schema = new Schema({
   Name: { type: String, required: true },
   Education: { type: String, required: true },
   City: { type: String, required: true },
@@ -16,6 +16,6 @@ const JobSchema: Schema = new Schema({
   qualities: { type: String, required: true },
 });
 
-const Job = mongoose.model<IJob>("Job", JobSchema);
+const ApplyJob = mongoose.model<IJob>("Job", applyJobSchema);
 
-export default Job;
+export default ApplyJob;
