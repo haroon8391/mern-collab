@@ -41,14 +41,7 @@ const App = () => {
                 </AuthLayout>
               }
             />
-            <Route
-              path="/jobs/:id"
-              element={
-                <AuthLayout authentication>
-                  <JobDetails />
-                </AuthLayout>
-              }
-            />
+            <Route path="/jobs/:id" element={<JobDetails />} />
             <Route
               path="/dashboard"
               element={

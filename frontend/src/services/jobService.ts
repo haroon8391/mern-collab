@@ -26,14 +26,8 @@ const getOne = async (id: string | undefined) => {
   if (!id) {
     throw new Error("No job ID provided");
   }
-  const token = getToken();
-  if (!token) {
-    throw new Error("No token found in Local Storage");
-  }
 
-  const response = await axios.get(`${baseUrl}/${id}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(`${baseUrl}/${id}`);
   return response.data;
 };
 
