@@ -19,7 +19,11 @@ const Navbar: FC = () => {
 				<div className="flex items-center justify-between h-16">
 					<div className="flex items-center">
 						<Logo />
+<<<<<<< HEAD
 						<DesktopMenu navLinks={navLinks} />
+=======
+						<DesktopMenu navLinks={navLinks} handleLogout={handleLogout} />
+>>>>>>> test-branch2
 					</div>
 					<MenuButton isOpen={isOpen} toggleMenu={toggleMenu} />
 				</div>
@@ -31,7 +35,11 @@ const Navbar: FC = () => {
 			>
 				<div className="flex flex-col justify-center px-2 pt-2 pb-3 space-y-1 sm:px-3">
 					<MobileMenu
+<<<<<<< HEAD
 						commonLinks={navLinks}
+=======
+						navLinks={navLinks}
+>>>>>>> test-branch2
 						handleLogout={handleLogout}
 						closeMenu={closeMenu}
 					/>
