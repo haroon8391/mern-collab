@@ -26,21 +26,12 @@ export const getJob = async (req: Request, res: Response) => {
 };
 
 export const createJob = async (req: Request, res: Response) => {
-<<<<<<< HEAD
-	console.log(req.user);
-
-	req.body.createdBy = req.body.createdBy || req.user?.userId;
-	const job = new Job(req.body);
-	const newJob = await job.save();
-	res.json(newJob);
-=======
   console.log(req.user);
 
   req.body.createdBy = req.body.createdBy || req.user?.userId;
   const job = new Job(req.body);
   const newJob = await job.save();
   res.json(newJob);
->>>>>>> 84291f9 (updated create job page)
 };
 
 export const updateJob = async (req: Request, res: Response) => {
@@ -83,15 +74,9 @@ export const deleteJob = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Job not found" });
   }
 
-<<<<<<< HEAD
-	if (jobInDb.createdBy.toString() !== req.user?.userId.toString()) {
-		return res.status(401).json({ message: "Unauthorized" });
-	}
-=======
   if (jobInDb.createdBy.toString() !== req.user?.userId) {
     return res.status(401).json({ message: "Unauthorized" });
   }
->>>>>>> 84291f9 (updated create job page)
 
   const job = await Job.findByIdAndDelete(id);
 
