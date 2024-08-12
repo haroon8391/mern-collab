@@ -48,7 +48,7 @@ export const updateJob = async (req: Request, res: Response) => {
 		return res.status(404).json({ message: "Job not found" });
 	}
 
-	if (jobInDb.createdBy.toString() !== req.user?.userId) {
+	if (jobInDb.createdBy.toString() !== req.user?.userId.toString()) {
 		return res.status(401).json({ message: "Unauthorized" });
 	}
 
