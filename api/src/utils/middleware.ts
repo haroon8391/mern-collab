@@ -90,7 +90,7 @@ const authentication = async (
 		}
 
 		req.user = {
-			userId: user._id,
+			userId: user._id.toString(),
 			name: user.name,
 			email: user.email,
 			admin: user.admin,
