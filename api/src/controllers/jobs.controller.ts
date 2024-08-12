@@ -26,7 +26,9 @@ export const getJob = async (req: Request, res: Response) => {
 };
 
 export const createJob = async (req: Request, res: Response) => {
-	req.body.createdBy = req.user?.userId;
+	console.log(req.user);
+
+	req.body.createdBy = req.body.createdBy || req.user?.userId;
 	const job = new Job(req.body);
 	const newJob = await job.save();
 	res.json(newJob);
