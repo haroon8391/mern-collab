@@ -9,7 +9,7 @@ export const getJobs = async (req: Request, res: Response) => {
 		...(createdBy && { createdBy }),
 	};
 
-	const jobs = await Job.find(queryObject);
+	const jobs = await Job.find(queryObject).sort({ createdAt: -1 });
 	res.json(jobs);
 };
 
