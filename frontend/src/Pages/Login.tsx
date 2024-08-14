@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 const Login: React.FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -58,14 +59,58 @@ const Login: React.FC = () => {
 						>
 							Password
 						</label>
-						<input
-							id="password"
-							type="password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-							required
-						/>
+						<div className="relative mt-1">
+							<input
+								id="password"
+								type={showPassword ? "text" : "password"}
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm pr-10"
+								required
+							/>
+							<span
+								className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+								onClick={() => setShowPassword(!showPassword)}
+							>
+								{showPassword ? (
+									<svg
+										className="h-5 w-5 text-gray-500"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+										/>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-.014.045-.03.087-.045.132-.207.619-.634 1.304-1.275 1.933-.64.628-1.426 1.195-2.265 1.673a11.056 11.056 0 01-2.422.986c-.387.104-.78.19-1.176.257-.796.13-1.619.193-2.459.193s-1.663-.063-2.459-.193a11.056 11.056 0 01-1.176-.257 11.056 11.056 0 01-2.422-.986c-.839-.478-1.625-1.045-2.265-1.673-.641-.629-1.068-1.314-1.275-1.933a11.056 11.056 0 01-.045-.132z"
+										/>
+									</svg>
+								) : (
+									<svg
+										className="h-5 w-5 text-gray-500"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7 .016-.045.032-.087.045-.132.207-.619.634-1.304 1.275-1.933.64-.628 1.426-1.195 2.265-1.673a11.056 11.056 0 012.422-.986c.387-.104.78-.19 1.176-.257.796-.13 1.619-.193 2.459-.193s1.663.063 2.459.193a11.056 11.056 0 011.176.257 11.056 11.056 0 012.422.986c.839.478 1.625 1.045 2.265 1.673.641.629 1.068 1.314 1.275 1.933.015.045.031.087.045.132-.311.905-.829 1.803-1.54 2.643a9.862 9.862 0 01-2.832 2.182M13.875 18.825a2.49 2.49 0 00-.375-.475l-3.732-3.732M3 3l18 18"
+										/>
+									</svg>
+								)}
+							</span>
+						</div>
 					</div>
 					<button
 						type="submit"
