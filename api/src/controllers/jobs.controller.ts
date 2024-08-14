@@ -9,7 +9,7 @@ export const getJobs = async (req: Request, res: Response) => {
     ...(createdBy && { createdBy }),
   };
 
-  const jobs = await Job.find(queryObject).sort({ createdAt: -1 });
+  const jobs = await Job.find(queryObject);
   res.json(jobs);
 };
 
@@ -48,7 +48,7 @@ export const updateJob = async (req: Request, res: Response) => {
     return res.status(404).json({ message: "Job not found" });
   }
 
-  if (jobInDb.createdBy.toString() !== req.user?.userId.toString()) {
+  if (jobInDb.createdBy.toString() !== req.user?.userId) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
@@ -65,11 +65,13 @@ export const deleteJob = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const userInDb = await User.findById(req.user?.userId);
+
   if (!userInDb) {
     return res.status(404).json({ message: "User not found" });
   }
 
   const jobInDb = await Job.findById(id);
+
   if (!jobInDb) {
     return res.status(404).json({ message: "Job not found" });
   }
