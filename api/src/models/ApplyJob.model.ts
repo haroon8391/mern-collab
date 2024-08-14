@@ -1,21 +1,28 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-interface IJob extends Document {
-  Name: string;
-  Education: string;
-  City: string;
-  Experience: string;
+interface IApplication extends Document {
+  name: string;
+  education: string;
+  city: string;
+  experience: string;
   qualities?: string;
+  userId: mongoose.Schema.Types.ObjectId;
+  jobId: mongoose.Schema.Types.ObjectId;
 }
 
-const applyJobSchema: Schema = new Schema({
-  Name: { type: String, required: true },
-  Education: { type: String, required: true },
-  City: { type: String, required: true },
-  Experience: { type: String, required: true },
+const applicationSchema: Schema = new Schema({
+  name: { type: String, required: true },
+  education: { type: String, required: true },
+  city: { type: String, required: true },
+  experience: { type: String, required: true },
   qualities: { type: String, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  jobId: { type: mongoose.Schema.Types.ObjectId, ref: "Job", required: true },
 });
 
-const ApplyJob = mongoose.model<IJob>("Job", applyJobSchema);
+const Application = mongoose.model<IApplication>(
+  "Application",
+  applicationSchema
+);
 
-export default ApplyJob;
+export default Application;
