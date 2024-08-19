@@ -66,10 +66,22 @@ const remove = async (id: string) => {
   return response.data;
 };
 
+const apply = async (jobApplication: any) => {
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found in Local Storage");
+  }
+  const response = await axios.post("/api/v1/jobs/apply", jobApplication, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
 export default {
   getAll,
   create,
   update,
   remove,
   getOne,
+  apply,
 };

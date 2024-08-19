@@ -1,24 +1,46 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import jobService from "../services/jobService";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ApplyJob: React.FC = () => {
+  const { jobId } = useParams<{ jobId: string }>();
   const [name, setName] = useState("");
   const [education, setEducation] = useState("");
   const [city, setCity] = useState("");
-  const [reason, setReason] = useState("");
+  const [qualities, setQualities] = useState("");
   const [experience, setExperience] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Add the logic to send data to the server here
-    console.log({ name, education, city, reason, experience });
+    try {
+      const jobApplication = {
+        jobId,
+        name,
+        education,
+        city,
+        qualities,
+        experience,
+      };
+      const data = jobService.apply(jobApplication);
+      console.log("Job Applied Successfully " + data);
+      toast("Job Applied Successfully", { type: "success" });
+      navigate("/jobs");
+    } catch (err) {
+      console.log("Error while applying for job " + err);
+      toast("Could not apply for job. Try Again.", { type: "error" });
+    }
   };
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-blue-100 shadow-md rounded-md mt-6">
       <h1 className="text-2xl font-bold mb-4 text-center">Application Form</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Form fields */}
         <div className="flex flex-col">
           <label htmlFor="name" className="text-lg font-medium mb-2">
             Name
@@ -81,8 +103,8 @@ const ApplyJob: React.FC = () => {
           </label>
           <textarea
             id="reason"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
+            value={qualities}
+            onChange={(e) => setQualities(e.target.value)}
             className="p-2 border border-gray-300 rounded-md"
             rows={4}
             required
@@ -93,9 +115,18 @@ const ApplyJob: React.FC = () => {
           type="submit"
           className="w-full px-3 font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white p-2 rounded-md hover:bg-gradient-to-r hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500"
         >
-          <Link to={"/jobs"}>Submit</Link>
+          Submit
         </button>
       </form>
+
+      <div className="text-center mt-4">
+        <Link
+          to="/jobs"
+          className="text-blue-500 hover:text-blue-700 underline"
+        >
+          Go to Jobs
+        </Link>
+      </div>
     </div>
   );
 };

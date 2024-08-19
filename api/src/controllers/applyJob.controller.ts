@@ -8,6 +8,8 @@ export const applyForJob = async (req: Request, res: Response) => {
     const { name, education, city, experience, qualities, jobId } = req.body;
     const userId = req.user?.userId;
 
+    console.log(userId);
+
     if (
       !name ||
       !education ||
