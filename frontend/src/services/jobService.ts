@@ -71,7 +71,7 @@ const apply = async (jobApplication: any) => {
   if (!token) {
     throw new Error("No token found in Local Storage");
   }
-  const response = await axios.post("/api/v1/jobs/apply", jobApplication, {
+  const response = await axios.post(`${baseUrl}/apply`, jobApplication, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;

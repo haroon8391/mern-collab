@@ -51,7 +51,7 @@ const App = () => {
               }
             />
             <Route
-              path="/jobs/apply"
+              path="/jobs/apply/:id"
               element={
                 <AuthLayout authentication>
                   <ApplyJob />

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const ApplyJob: React.FC = () => {
-  const { jobId } = useParams<{ jobId: string }>();
+  const { id } = useParams<{ id: string }>();
   const [name, setName] = useState("");
   const [education, setEducation] = useState("");
   const [city, setCity] = useState("");
@@ -19,7 +19,7 @@ const ApplyJob: React.FC = () => {
 
     try {
       const jobApplication = {
-        jobId,
+        jobId: id,
         name,
         education,
         city,
