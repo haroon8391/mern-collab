@@ -4,12 +4,11 @@ import jobService from "../services/jobService";
 import { useSelector } from "react-redux";
 
 interface Job {
-  id: string; // Adjust type based on your backend data
+  id: string;
   title: string;
   description: string;
   location: string;
   createdAt: string;
-  // Add other fields if necessary
 }
 
 interface Applicant {
@@ -39,15 +38,12 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showApplicants, setShowApplicants] = useState(false);
-  const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(
-    null
-  );
+  const [showMore, setShowMore] = useState<Applicant | null>(null);
 
   const isAuthenticated = useSelector(
     (state: any) => state.authSlice.isAuthenticated
   );
   const userData = useSelector((state: any) => state.authSlice.userData);
-  console.log(isAuthenticated);
 
   const navigate = useNavigate();
 
@@ -68,7 +64,7 @@ const Dashboard: React.FC = () => {
     };
 
     fetchJobs();
-  }, []);
+  }, [userData.userId]);
 
   const handleDelete = async (id: string) => {
     const confirmDelete = window.confirm("Are you sure you want to delete?");
@@ -89,11 +85,13 @@ const Dashboard: React.FC = () => {
   };
 
   const handleSeeMore = (applicant: Applicant) => {
-    setSelectedApplicant(applicant);
+    // Toggle between showing and hiding additional details
+    setShowMore(
+      showMore && showMore.email === applicant.email ? null : applicant
+    );
   };
 
   const handleStatusChange = (status: string) => {
-    // Here you can implement the logic for updating the applicant's status
     console.log(`Applicant status changed to: ${status}`);
   };
 
@@ -242,7 +240,7 @@ const Dashboard: React.FC = () => {
                     <p className="mb-2">
                       <strong>Email:</strong> {applicant.email}
                     </p>
-                    {selectedApplicant?.email === applicant.email ? (
+                    {showMore && showMore.email === applicant.email ? (
                       <>
                         <p className="mb-2">
                           <strong>Education:</strong> {applicant.education}
@@ -270,14 +268,24 @@ const Dashboard: React.FC = () => {
                             Interview
                           </button>
                         </div>
+                        <div className="text-center">
+                          <button
+                            onClick={() => handleSeeMore(applicant)}
+                            className="text-blue-600 hover:underline"
+                          >
+                            Show Less
+                          </button>
+                        </div>
                       </>
                     ) : (
-                      <button
-                        onClick={() => handleSeeMore(applicant)}
-                        className="text-blue-600 hover:underline"
-                      >
-                        See More
-                      </button>
+                      <div className="text-center">
+                        <button
+                          onClick={() => handleSeeMore(applicant)}
+                          className="text-blue-600 hover:underline"
+                        >
+                          Show More
+                        </button>
+                      </div>
                     )}
                   </li>
                 ))}
