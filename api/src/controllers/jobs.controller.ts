@@ -26,6 +26,6 @@ export const updateJob = async (req: Request, res: Response) => {
 
 export const deleteJob = async (req: Request, res: Response) => {
 	const { id } = req.params;
-	const job = await jobService.deleteJob(id);
+	const job = await jobService.deleteJob(id, req.user?.userId.toString());
 	res.json(job);
 };
