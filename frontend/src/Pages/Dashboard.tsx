@@ -9,19 +9,8 @@ interface Job {
 	description: string;
 	location: string;
 	createdAt: string;
-	// Add other fields if necessary
+	applicants: any[];
 }
-
-const applicants: any = [
-	{
-		name: "John Doe",
-		email: "johndoe@gmail.com",
-	},
-	{
-		name: "Jane Doe",
-		email: "janne@gmail.com",
-	},
-];
 
 const Dashboard: React.FC = () => {
 	const [jobs, setJobs] = useState<Job[]>([]);
@@ -120,105 +109,85 @@ const Dashboard: React.FC = () => {
 							</thead>
 							<tbody>
 								{jobs.map((job) => (
-									<tr
-										key={job.id}
-										className="hover:bg-gray-100 transition duration-150"
-									>
-										<td className="py-2 px-4 border-b border-gray-200 text-center">
-											{job.title}
-										</td>
-										<td className="py-2 px-4 border-b border-gray-200 text-center">
-											{job.location}
-										</td>
-										<td className="py-2 px-4 border-b border-gray-200 text-center">
-											{new Date(job.createdAt).toLocaleDateString()}
-										</td>
-										<td className="py-2 px-4 border-b border-gray-200 text-center">
-											<div className="flex space-x-2 justify-center">
-												<button
-													onClick={() => navigate(`/update-job/${job.id}`)}
-													className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-500"
-													aria-label={`Update ${job.title}`}
-												>
-													Update
-												</button>
-												<button
-													onClick={() => handleDelete(job.id)}
-													className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-500"
-													aria-label={`Delete ${job.title}`}
-												>
-													Delete
-												</button>
-												<button
-													onClick={() => setShowApplicants(true)}
-													className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-500"
-													aria-label={`Delete ${job.title}`}
-												>
-													View Applicants
-												</button>
+									<>
+										<tr
+											key={job.id}
+											className="hover:bg-gray-100 transition duration-150"
+										>
+											<td className="py-2 px-4 border-b border-gray-200 text-center">
+												{job.title}
+											</td>
+											<td className="py-2 px-4 border-b border-gray-200 text-center">
+												{job.location}
+											</td>
+											<td className="py-2 px-4 border-b border-gray-200 text-center">
+												{new Date(job.createdAt).toLocaleDateString()}
+											</td>
+											<td className="py-2 px-4 border-b border-gray-200 text-center">
+												<div className="flex space-x-2 justify-center">
+													<button
+														onClick={() => navigate(`/update-job/${job.id}`)}
+														className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-500"
+														aria-label={`Update ${job.title}`}
+													>
+														Update
+													</button>
+													<button
+														onClick={() => handleDelete(job.id)}
+														className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-500"
+														aria-label={`Delete ${job.title}`}
+													>
+														Delete
+													</button>
+													<button
+														onClick={() => setShowApplicants(true)}
+														className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-500"
+														aria-label={`Delete ${job.title}`}
+													>
+														View Applicants
+													</button>
+												</div>
+											</td>
+										</tr>
+										{showApplicants && (
+											<div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50 transition-opacity">
+												<div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-4 sm:w-1/2">
+													<button
+														className="absolute top-3 right-3 text-gray-600 hover:text-gray-800 focus:outline-none"
+														aria-label="Close"
+														onClick={() => setShowApplicants(false)}
+													>
+														&times;
+													</button>
+													<h2 className="text-2xl font-bold mb-6 text-center">
+														Applicants for Job
+													</h2>
+													<ul className="space-y-4">
+														{job.applicants.map((applicant: any) => (
+															<li
+																key={applicant.id}
+																className="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200"
+															>
+																<p className="mb-2">
+																	<strong>Name:</strong> {applicant.name}
+																</p>
+																<p className="mb-2">
+																	<strong>Education:</strong>{" "}
+																	{applicant.education}
+																</p>
+																<p className="mb-2">
+																	<strong>City:</strong> {applicant.city}
+																</p>
+															</li>
+														))}
+													</ul>
+												</div>
 											</div>
-										</td>
-									</tr>
+										)}
+									</>
 								))}
 							</tbody>
 						</table>
-					</div>
-				</div>
-			)}
-
-			{showApplicants && (
-				<div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50 transition-opacity">
-					<div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mx-4 sm:w-1/2">
-						<button
-							className="absolute top-3 right-3 text-gray-600 hover:text-gray-800 focus:outline-none"
-							aria-label="Close"
-							onClick={() => setShowApplicants(false)}
-						>
-							&times;
-						</button>
-						<h2 className="text-2xl font-bold mb-6 text-center">
-							Applicants for Job
-						</h2>
-						{!applicants ? (
-							<div className="flex justify-center items-center min-h-[50vh]">
-								<svg
-									className="animate-spin h-5 w-5 text-gray-800"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-								>
-									<circle
-										className="opacity-25"
-										cx="12"
-										cy="12"
-										r="10"
-										stroke="currentColor"
-										strokeWidth="4"
-									></circle>
-									<path
-										className="opacity-75"
-										fill="currentColor"
-										d="M4 12a8 8 0 018-8v8H4z"
-									></path>
-								</svg>
-							</div>
-						) : (
-							<ul className="space-y-4">
-								{applicants.map((applicant: any) => (
-									<li
-										key={applicant.id}
-										className="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200"
-									>
-										<p className="mb-2">
-											<strong>Name:</strong> {applicant.name}
-										</p>
-										<p className="mb-2">
-											<strong>Email:</strong> {applicant.email}
-										</p>
-									</li>
-								))}
-							</ul>
-						)}
 					</div>
 				</div>
 			)}
