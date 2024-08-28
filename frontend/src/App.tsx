@@ -21,7 +21,7 @@ const App = () => {
       <div className="App">
         <Navbar />
         <ToastContainer />
-        <div className="md:px-10 sm:px-0">
+        <div className="md:px-0 sm:px-0">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route
