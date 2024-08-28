@@ -1,7 +1,7 @@
 import Job from "../../models/Job.model";
 
 export const findJobs = async (query: any) => {
-	return await Job.find(query);
+	return await Job.find(query).populate("applicants");
 };
 
 export const saveJob = async (jobData: any) => {
