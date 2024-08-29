@@ -7,7 +7,7 @@ interface Job {
   title: string;
   description: string;
   location: string;
-  category: string;
+  job_category: string;
 }
 
 const JobLists = () => {
@@ -28,8 +28,14 @@ const JobLists = () => {
   }, []);
 
   useEffect(() => {
+    console.log(jobs);
+    console.info("Jobs fetched successfully");
+    console.log(filteredJobs);
+  });
+
+  useEffect(() => {
     const filtered = jobs.filter((job) => {
-      return selectedCategory ? job.category === selectedCategory : true;
+      return selectedCategory ? job.job_category === selectedCategory : true;
     });
     setFilteredJobs(filtered);
     setcurrPage(1);
@@ -64,10 +70,14 @@ const JobLists = () => {
           className="p-3 border rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">All Categories</option>
+          <option value="Software Development">Software Development</option>
           <option value="Frontend Developer">Frontend Developer</option>
           <option value="Backend Developer">Backend Developer</option>
-          <option value="Software Engineer">Software Engineer</option>
           <option value="Full Stack Developer">Full Stack Developer</option>
+          <option value="Database Administration">
+            Database Administration
+          </option>
+          <option value="Quality Assurance">Quality Assurance</option>
         </select>
       </div>
 
