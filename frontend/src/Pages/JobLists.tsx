@@ -55,8 +55,6 @@ const JobLists = () => {
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">Job Listings</h1>
-
-      {/* Centered Category Filter */}
       <div className="flex justify-center mb-6">
         <select
           value={selectedCategory}
