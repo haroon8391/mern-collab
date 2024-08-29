@@ -28,12 +28,6 @@ const JobLists = () => {
   }, []);
 
   useEffect(() => {
-    console.log(jobs);
-    console.info("Jobs fetched successfully");
-    console.log(filteredJobs);
-  });
-
-  useEffect(() => {
     const filtered = jobs.filter((job) => {
       return selectedCategory ? job.job_category === selectedCategory : true;
     });
